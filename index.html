@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETSA - Espacio de Trabajo por la Soberanía Alimentaria</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Carga de Lucide Icons (Iconos modernos y limpios) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Configuración de paleta de colores terrosos y pasteles (inspirada en la tierra y la cosecha) */
+        :root {
+            --color-primary: #4E342E; /* Marrón Terroso Oscuro (Cacao) */
+            --color-secondary: #A1887F; /* Marrón Claro (Mocha) */
+            --color-pastel-bg: #FFF3E0; /* Crema/Melocotón Suave */
+            --color-pastel-accent: #C8E6C9; /* Verde Pastel Suave */
+            --color-text-dark: #3E2723; /* Marrón Muy Oscuro */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-pastel-bg);
+            color: var(--color-text-dark);
+        }
+        .text-primary { color: var(--color-primary); }
+        .bg-primary { background-color: var(--color-primary); }
+        .bg-secondary { background-color: var(--color-secondary); }
+        .bg-pastel-accent { background-color: var(--color-pastel-accent); }
+        .border-primary { border-color: var(--color-primary); }
+
+        /* Estilo para los botones de navegación */
+        .tab-button {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+        }
+        .tab-button:hover {
+            background-color: rgba(78, 52, 46, 0.1); 
+        }
+        .tab-button.active {
+            background-color: var(--color-primary);
+            color: var(--color-pastel-bg);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- BARRA SUPERIOR DE REDES Y CONTACTO -->
+    <div class="bg-primary p-2">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center text-sm text-white">
+            <span class="font-bold hidden sm:block">
+                ETSA
+            </span>
+            <div class="flex items-center space-x-4">
+                <a href="mailto:Etsalimnetaria@gmail.com" class="flex items-center space-x-1 hover:text-pastel-accent transition duration-200">
+                    <i data-lucide="mail" class="w-4 h-4"></i>
+                    <span>Etsalimnetaria@gmail.com</span>
+                </a>
+                <a href="https://www.instagram.com/etsalimentaria/" target="_blank"  class="flex items-center space-x-1 hover:text-pastel-accent transition duration-200" aria-label="Síguenos en redes sociales">
+                    <i data-lucide="instagram" class="w-4 h-4"></i>
+                    <span>etsalimentaria</span>
+                </a>
+                <a href="https://www.facebook.com/ETSA2015" target="_blank" class="flex items-center space-x-1 hover:text-pastel-accent transition duration-200" aria-label="Síguenos en redes sociales">
+                    <i data-lucide="facebook" class="w-4 h-4"></i>
+                    <span>ETSA2015</span>
+                </a>
+                <a href="https://www.youtube.com/@espaciodetrabajoporlasober4045" target="_blank" class="flex items-center space-x-1 hover:text-pastel-accent transition duration-200" aria-label="Síguenos en redes sociales">
+                    <i data-lucide="youtube" class="w-4 h-4"></i>
+                    <span>Espacio de Trabajo por la Soberanía Alimentaria</span>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+ 
+    <!-- ENCABEZADO Y NAVEGACIÓN PRINCIPAL -->
+    <header class="bg-secondary shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto p-4 flex flex-col lg:flex-row justify-between items-center">
+            
+            <!-- Logo y Acrónimo -->
+            <div class="flex items-center space-x-3 mb-4 lg:mb-0">
+                <i data-lucide="leaf" class="text-white w-8 h-8 flex-shrink-0"></i>
+                <h1 class="text-3xl font-bold text-white tracking-wider">
+                    ETSA 
+                    <span class="text-lg font-normal block sm:inline-block">Espacio de Trabajo por la Soberanía Alimentaria</span>
+                </h1>
+            </div>
+            
+            <!-- Botones de Pestaña/Navegación -->
+            <nav class="flex justify-center space-x-2 sm:space-x-4 p-1 bg-white/30 rounded-full overflow-x-auto">
+                <button id="tab-quienes-somos" class="tab-button active" onclick="showView('quienes-somos')">
+                    <i data-lucide="users" class="inline-block w-4 h-4 mr-1"></i> Quienes Somos
+                </button>
+                <button id="tab-blog" class="tab-button" onclick="showView('blog')">
+                    <i data-lucide="newspaper" class="inline-block w-4 h-4 mr-1"></i> Blog
+                </button>
+                <button id="tab-contacto" class="tab-button" onclick="showView('contacto')">
+                    <i data-lucide="send" class="inline-block w-4 h-4 mr-1"></i> Contacto
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL DE CONTENIDO -->
+    <main class="max-w-7xl mx-auto p-4 sm:p-8">
+
+        <!-- 1. VISTA QUIENES SOMOS (Default) -->
+        <section id="view-quienes-somos" class="view-content transition-opacity duration-500">
+            <div class="bg-white p-6 sm:p-10 rounded-xl shadow-xl">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-primary mb-6 border-b-4 border-pastel-accent pb-2 text-center">
+                    🌿 Nuestro Espacio y la Soberanía Alimentaria
+                </h2>
+                
+                <div class="space-y-8 text-lg">
+                    
+                    <!-- Sección de Origen del ETSA -->
+                    <div class="bg-pastel-accent/70 p-6 rounded-lg border-l-4 border-primary shadow-inner">
+                        <h3 class="text-2xl font-bold text-primary mb-3">
+                            <i data-lucide="package" class="inline-block w-5 h-5 mr-2"></i> Que es el ETSA y cómo surge esta agrupación
+                        </h3>
+                        <p class="text-text-dark leading-relaxed">
+                            El Espacio de Trabajo por la Soberanía Alimentaria (ETSA) surgió a partir del Curso-Taller “Soberanía Alimentaria y Agroecología” que se realizó en el año 2013 en el Departamento de Agronomía de la Universidad Nacional del Sur (UNS), Bahía Blanca. Se fue gestando a partir del interés de un grupo de docentes, profesionales y estudiantes universitarios, relacionados con las ciencias agrarias y sociales, cuyas preocupaciones giraban en torno al sistema agroalimentario que se desarrolla en nuestro país. El principal cuestionamiento fue la falta de contenidos vinculados con la soberanía alimentaria, la agroecología y la agricultura familiar, en los planes de estudio de las carreras de Agronomía, Biología, Economía y Geografía, entre otras.
+                        </p>
+                        <p class="text-text-dark leading-relaxed mt-3">
+                            Como su nombre lo indica, el ETSA surgió como un espacio, espacio que se abrió para hacer un hueco en el paradigma dominante, en la forma hegemónica de entender nuestro sistema de producción, distribución y consumo de alimentos; y para instalar el debate –necesario y urgente– sobre las implicancias sociales y ambientales de nuestro sistema agroalimentario. Desde un primer momento fue la Universidad el lugar que nos nucleó para compartir ideas, saberes, sentires, que distaban –salvo excepciones– del contexto ideológico de enseñanza y aprendizaje dominante que nos rodeaba. 
+                        </p>
+                        <p class="text-text-dark leading-relaxed mt-3 font-semibold">
+                            Si bien los comienzos no fueron fáciles, hoy el ETSA continúa trabajando en la difusión, comunicación y recuperación de saberes vinculados con la soberanía alimentaria, habiendo sumado a diversos actores interesados en estas problemáticas (productores, consumidores, estudiantes y profesionales de diversas disciplinas).
+                        </p>
+                    </div>
+
+                    <!-- Sección de la Definición de Soberanía -->
+                    <h3 class="text-3xl font-extrabold text-primary pt-4 mb-4">
+                        <i data-lucide="wheat" class="inline-block w-6 h-6 mr-2"></i> El Concepto de Soberania Alimentaria
+                    </h3>
+                    <p class="leading-relaxed">
+                        Se entiende como el derecho de un país a definir sus propias políticas y estrategias sustentables de producción, distribución y consumo de alimentos. Su objetivo es garantizar el derecho a la alimentación sana y nutritiva para toda la población, respetando sus propias culturas y la diversidad de los sistemas productivos y de gestión de los espacios rurales.
+                    </p>
+                    
+                    <div class="flex flex-col md:flex-row items-start bg-pastel-accent p-6 rounded-xl border-l-4 border-primary/50 shadow-md">
+                        <i data-lucide="hand-heart" class="text-primary w-10 h-10 mr-4 mb-4 md:mb-0 flex-shrink-0"></i>
+                        <div>
+                            <h3 class="text-2xl font-semibold text-primary mb-2">Puntos Clave:</h3>
+                            <ul class="list-disc list-inside space-y-2 ml-4 text-base">
+                                <li>La soberanía alimentaria pone a los consumidores en el centro de las decisiones alimentarias, tratando a los alimentos de manera más justa. Esto permite elegir sistemas alimentarios que contribuyan al bienestar y la salud de las personas.</li>
+                                <li>Para lograrla, es fundamental conocer el origen y la producción de los alimentos, pagar un precio justo, priorizar circuitos locales, promover la agroecología, la economía social y solidaria, y el consumo responsable y activo.</li>
+                                <li>Implica colocar a la producción de alimentos, la distribución y el consumo sobre la base de la justicia social, la independencia económica y la soberanía política.</li>
+                                <li>Va más allá de la seguridad alimentaria, buscando transformar el sistema para hacerlo justo, ecológico y sostenible, poniendo a las personas y al planeta en primer lugar.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. VISTA DEL BLOG -->
+        <section id="view-blog" class="view-content transition-opacity duration-500 hidden opacity-0">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-primary mb-8 text-center">
+                📰 Blog: Noticias, Publicaciones y Reflexiones
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Post 1 (Ejemplo con contenido del archivo) -->
+                <article class="bg-white rounded-xl shadow-xl overflow-hidden hover:shadow-2xl transition duration-300 border border-secondary/50">
+                    <img src="images/mes agroecologia.jpg" alt="mes de la agroecologia ETSA" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-sm bg-pastel-accent px-3 py-1 rounded-full font-medium text-text-dark">Mes de la agroecologia</span>
+                        <h3 class="text-xl font-bold text-primary mt-3 mb-2">
+                            El sabado 8 de noviembre el ETSA a las 11hs compartimos conceptos y principios de la Agroecología en Parque Boronat
+                        </h3>
+                        <p class="text-gray-600 text-sm">
+                            El sabado 8 de noviembre el ETSA a las 11hs compartimos conceptos y principios de la Agroecología junto a feriantes que nos relataron sus inicios y recorrido en el camino de la Agroecología, por qué se destaca lo que ofrecen cada 2do y 4to sábado en esta hermosa feria.
+Parque Boronat
+
+                        </p>
+                        <a href="p" class="inline-block mt-4 text-primary hover:underline font-semibold flex items-center">Leer más <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                     
+                    </div>
+                </article>
+
+                <!-- Post 2 (Ejemplo con contenido del archivo) -->
+                <article class="bg-white rounded-xl shadow-xl overflow-hidden hover:shadow-2xl transition duration-300 border border-secondary/50">
+                    <img src="https://placehold.co/600x400/FFF3E0/4E342E?text=Residuos" alt="Imagen de compostaje y residuos orgánicos" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-sm bg-secondary/50 px-3 py-1 rounded-full font-medium text-text-dark">Sostenibilidad</span>
+                        <h3 class="text-xl font-bold text-primary mt-3 mb-2">
+                            Composta en la Ciudad: Transforma tus Residuos
+                        </h3>
+                        <p class="text-gray-600 text-sm">
+                            Transforma tus residuos orgánicos en vida para la tierra. Reducir, reutilizar, recompostar.
+                        </p>
+                        <a href="#" class="inline-block mt-4 text-primary hover:underline font-semibold flex items-center">Leer más <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                    </div>
+                </article>
+
+                <!-- Post 3 (Post de Relleno) -->
+                <article class="bg-white rounded-xl shadow-xl overflow-hidden hover:shadow-2xl transition duration-300 border border-secondary/50">
+                    <img src="https://placehold.co/600x400/A1887F/FFF3E0?text=Politicas+Alimentarias" alt="Gráfico de políticas alimentarias" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="text-sm bg-pastel-accent px-3 py-1 rounded-full font-medium text-text-dark">Investigación</span>
+                        <h3 class="text-xl font-bold text-primary mt-3 mb-2">
+                            Análisis de Políticas Públicas de Soberanía
+                        </h3>
+                        <p class="text-gray-600 text-sm">
+                            Un estudio profundo sobre las normativas que impulsan o frenan el cambio del modelo agroalimentario.
+                        </p>
+                        <a href="#" class="inline-block mt-4 text-primary hover:underline font-semibold flex items-center">Leer más <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- 3. VISTA CONTACTO -->
+        <section id="view-contacto" class="view-content transition-opacity duration-500 hidden opacity-0">
+            <div class="bg-white p-6 sm:p-10 rounded-xl shadow-xl">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-primary mb-8 text-center">
+                    ✉️ Conversemos y Colaboremos
+                </h2>
+                <div class="grid lg:grid-cols-2 gap-10">
+                    <!-- Formulario de Contacto -->
+                    <div class="bg-pastel-bg/50 p-6 rounded-lg border border-secondary">
+                        <h3 class="text-2xl font-semibold text-primary mb-4">Envíanos un Mensaje</h3>
+                        <form id="contactForm" class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-text-dark">Nombre Completo</label>
+                                <input type="text" id="name" name="name" required
+                                       class="mt-1 block w-full px-3 py-2 border border-secondary rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-text-dark">Correo Electrónico</label>
+                                <!-- Usamos el email proporcionado como ejemplo de valor -->
+                                <input type="email" id="email" name="email" required value="Etsalimnetaria@gmail.com"
+                                       class="mt-1 block w-full px-3 py-2 border border-secondary rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-text-dark">Mensaje</label>
+                                <textarea id="message" name="message" rows="4" required
+                                          class="mt-1 block w-full px-3 py-2 border border-secondary rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"></textarea>
+                            </div>
+                            <button type="submit"
+                                    class="w-full py-3 px-4 border border-transparent rounded-md shadow-lg text-sm font-medium text-white bg-primary hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition duration-300 ease-in-out transform hover:scale-[1.01]">
+                                Enviar
+                            </button>
+                            <div id="contactMessage" class="mt-4 text-center hidden p-3 rounded-md"></div>
+                        </form>
+                    </div>
+
+                    <!-- Información de Contacto y Redes -->
+                    <div class="space-y-6 lg:mt-0 mt-6 p-6 bg-pastel-accent/50 rounded-lg border border-secondary">
+                        <h3 class="text-2xl font-semibold text-primary border-b pb-2 border-secondary">Otras Vías</h3>
+                        <div class="flex items-start space-x-4">
+                            <i data-lucide="mail" class="text-2xl text-primary flex-shrink-0 mt-1"></i>
+                            <div>
+                                <p class="font-medium text-text-dark">Email de Contacto</p>
+                                <a href="mailto:Etsalimnetaria@gmail.com" class="text-primary hover:underline">Etsalimnetaria@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <i data-lucide="instagram" class="text-2xl text-primary flex-shrink-0 mt-1"></i>
+                            <div>
+                                <p class="font-medium text-text-dark">Síguenos en Instagram</p>
+                                <a href="https://www.instagram.com/etsalimentaria/" class="text-primary hover:underline">@etsalimentaria</a>
+                            </div>
+                            <div>
+                                <p class="font-medium text-text-dark">O en Facebok</p>
+                                <a href="https://www.facebook.com/ETSA2015" class="text-primary hover:underline">ETSA2015</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <i data-lucide="map-pin" class="text-2xl text-primary flex-shrink-0 mt-1"></i>
+                            <div>
+                                <p class="font-medium text-text-dark">Sede / Ubicación</p>
+                                <p class="text-text-dark">Nos reunimos en el Comedor de la UNS, 1° piso, lunes por medio a las 18 horas (Bahía Blanca)</p>
+                            </div>
+                        </div>
+                        <p class="pt-4 text-sm text-gray-600 border-t border-secondary">Identificador ETSA: <span class="font-mono text-primary font-bold">ETSA2015</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="bg-primary text-white text-center p-4 mt-10">
+        <p class="text-sm">© 2025 ETSA. Espacio de Trabajo por la Soberanía Alimentaria. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Script de JavaScript para la Navegación por Vistas (Tabs) -->
+    <script>
+        // Inicializa los iconos de Lucide
+        lucide.createIcons();
+
+        // Función para mostrar la vista seleccionada
+        function showView(viewName) {
+            // Oculta todas las vistas
+            document.querySelectorAll('.view-content').forEach(view => {
+                view.classList.add('hidden');
+                view.classList.remove('opacity-100');
+                view.classList.add('opacity-0');
+            });
+
+            // Desactiva todos los botones de pestaña
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Muestra la vista deseada
+            const targetView = document.getElementById('view-' + viewName);
+            const targetButton = document.getElementById('tab-' + viewName);
+
+            if (targetView && targetButton) {
+                // Pequeño timeout para permitir la animación de opacidad
+                setTimeout(() => {
+                    targetView.classList.remove('hidden');
+                    setTimeout(() => {
+                        targetView.classList.remove('opacity-0');
+                        targetView.classList.add('opacity-100');
+                    }, 10);
+                }, 10);
+                
+                // Activa el botón
+                targetButton.classList.add('active');
+            }
+        }
+        
+        // Manejo de envío del formulario de contacto (simulación)
+        const contactForm = document.getElementById('contactForm');
+        const contactMessage = document.getElementById('contactMessage');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            contactMessage.classList.add('hidden'); // Ocultar mensaje anterior
+
+            // Simular el envío de datos
+            contactMessage.innerHTML = `<i data-lucide="check-circle" class="inline-block w-4 h-4 mr-2"></i> ¡Mensaje enviado! Gracias por tu interés en la Soberanía Alimentaria.`;
+            contactMessage.classList.remove('hidden');
+            contactMessage.classList.add('bg-pastel-accent', 'text-text-dark', 'font-semibold');
+            lucide.createIcons(); // Vuelve a renderizar el icono
+            contactForm.reset(); // Limpiar formulario
+
+            // Ocultar el mensaje después de 5 segundos
+            setTimeout(() => {
+                contactMessage.classList.add('hidden');
+                contactMessage.classList.remove('bg-pastel-accent', 'text-text-dark', 'font-semibold');
+            }, 5000);
+        });
+
+        // Asegurar que la vista inicial sea "Quienes Somos"
+        document.addEventListener('DOMContentLoaded', () => {
+            showView('quienes-somos');
+        });
+        
+    </script>
+</body>
+</html>
